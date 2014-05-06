@@ -35,7 +35,7 @@ namespace Mp3LibrarySorter
             _mp3FileReader = mp3FileReader;
 
             // get all the mp3s from the source folder
-            var files = _fileSystem.GetMp3FilePaths(_sourceFolder);
+            var files = _fileSystem.GetMp3FilePaths(_sourceFolder, true);
 
             // generates a List of MP3Node files representing the songs in the folder
             _mp3FileList = _mp3FileReader.RetrieveTagsFromMp3Files(files);

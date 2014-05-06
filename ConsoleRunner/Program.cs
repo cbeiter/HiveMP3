@@ -10,6 +10,9 @@ namespace HiveConsole
 {
     class Program
     {
+        static string divider = "-----------------\n";
+
+        [STAThreadAttribute]
         static void Main(string[] args)
         {
             Console.WriteLine("Welcome to the Hive MP3 Library Sorter!");
@@ -47,31 +50,11 @@ namespace HiveConsole
 
             Console.Write(Environment.NewLine);
 
-            // Display target location folder dialog
-            Console.WriteLine("Define a target location for the renamed track...");
-
-            // windows form dialog to select Folder destination
-            FolderBrowserDialog targetLocationDialog = new FolderBrowserDialog();
-            targetLocationDialog.Description = "Select the base folder to copy the renamed tracks to";
-            targetLocationDialog.ShowNewFolderButton = true;
-            targetLocationDialog.RootFolder = Environment.SpecialFolder.MyComputer;
-
-            if (targetLocationDialog.ShowDialog() != DialogResult.OK)
-            {
-                Console.WriteLine("User abort. Exiting...");
-                Environment.Exit(0);
-            }
-
-            destination = targetLocationDialog.SelectedPath;
-
-            Console.WriteLine(string.Format(@"Chosen target path is {0}", destination));
-            Console.Write(Environment.NewLine);
-            
             // Display start location folder dialog
-            Console.WriteLine("Where are your music files?  Select the base folder... ");
+            Console.WriteLine("Where are your music files?  Select the source folder... ");
 
             FolderBrowserDialog startInDialog = new FolderBrowserDialog();
-            startInDialog.Description = "Select the base folder where your music files are located";
+            startInDialog.Description = "Select the source folder where your music files are located";
             startInDialog.ShowNewFolderButton = false;
             startInDialog.RootFolder = Environment.SpecialFolder.MyComputer;
 
@@ -85,7 +68,29 @@ namespace HiveConsole
 
             Console.WriteLine(string.Format(@"The path to your music files is {0}", startIn));
             Console.Write(Environment.NewLine);
-            Console.WriteLine("Start indexing and organizing procedure. Press Y to start, Q to Quit.");
+
+
+            // Display target location folder dialog
+            Console.WriteLine("Define a destination for the renamed tracks...");
+
+            // windows form dialog to select Folder destination
+            FolderBrowserDialog targetLocationDialog = new FolderBrowserDialog();
+            targetLocationDialog.Description = "Select the destination folder to copy the files to";
+            targetLocationDialog.ShowNewFolderButton = true;
+            targetLocationDialog.RootFolder = Environment.SpecialFolder.MyComputer;
+
+            if (targetLocationDialog.ShowDialog() != DialogResult.OK)
+            {
+                Console.WriteLine("User abort. Exiting...");
+                Environment.Exit(0);
+            }
+
+            destination = targetLocationDialog.SelectedPath;
+
+            Console.WriteLine(string.Format(@"Chosen destination path is {0}", destination));
+            Console.Write(Environment.NewLine);
+            
+            Console.WriteLine("Start indexing and organizing procedure. Press S to start, Q to Quit.");
             
             System.ConsoleKeyInfo response;
 
@@ -93,7 +98,7 @@ namespace HiveConsole
             {
                 response = Console.ReadKey();
                 
-                if(response.Key == ConsoleKey.Y)
+                if(response.Key == ConsoleKey.S)
                 {
                     break;
                 }
@@ -104,6 +109,8 @@ namespace HiveConsole
                 }
 
             } while (true);
+            Console.Write(Environment.NewLine);
+            Console.Write(Environment.NewLine);
 
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
@@ -117,12 +124,14 @@ namespace HiveConsole
                 tagLibrary, fileReader);
 
             Console.WriteLine(string.Format("{0} artists found", tagLibrary.Artists.Count));
+            Console.Write(divider);
 
             foreach(string artist in tagLibrary.Artists)
             {
                 IList<string> albums = tagLibrary.GetAlbumsForArtist(artist);
 
                 Console.WriteLine("Artist: " + artist + "\tAlbum count: " + albums.Count);
+                Console.Write(divider);
 
                 foreach(string album in albums)
                 {
@@ -131,10 +140,12 @@ namespace HiveConsole
             }
 
             Console.Write(Environment.NewLine);
+            Console.WriteLine("Press any key to your library and copy files to their new folder structure.");
+            Console.ReadKey();
 
             try
             {
-                // Hive.CreateFoldersForArtists();
+                Hive.CreateFoldersForArtists();
     
                 //organizer.Index();
                 //organizer.Organize();

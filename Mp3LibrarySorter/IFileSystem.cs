@@ -12,7 +12,7 @@ namespace Mp3LibrarySorter
     public interface IFileSystem
     {
         void CreateDirectory(string artistName);
-        List<string> GetMp3FilePaths(string someStartDirectory);
+        List<string> GetMp3FilePaths(string someStartDirectory, bool isRecursive);
         void Move(string source, string destination);
     }
 
@@ -40,11 +40,13 @@ namespace Mp3LibrarySorter
         /// TODO: also, does not use the file extensions to filter the Get of files like MP3.
         /// </summary>
         /// <param name="someStartDirectory">Directory from which we are getting the MP3s</param>
+        /// <param name="isRecursive" type="bool">indicates whether a recursive get should be done</param>
         /// <returns>List of strings of names of all the MP3 files</returns>
-        public List<string> GetMp3FilePaths(string someStartDirectory)
+        public List<string> GetMp3FilePaths(string someStartDirectory, bool isRecursive)
         {
+            SearchOption recursiveGet = isRecursive ? SearchOption.TopDirectoryOnly : SearchOption.AllDirectories;
             // looks like this is cur
-            return new List<string>(Directory.GetFiles(someStartDirectory, "*.*", SearchOption.TopDirectoryOnly));
+            return new List<string>(Directory.GetFiles(someStartDirectory, "*.*", recursiveGet));
         }
 
         /// <summary>
