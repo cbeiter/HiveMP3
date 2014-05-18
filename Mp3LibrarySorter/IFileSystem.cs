@@ -44,7 +44,7 @@ namespace Mp3LibrarySorter
         /// <returns>List of strings of names of all the MP3 files</returns>
         public List<string> GetMp3FilePaths(string someStartDirectory, bool isRecursive)
         {
-            SearchOption recursiveGet = isRecursive ? SearchOption.TopDirectoryOnly : SearchOption.AllDirectories;
+            SearchOption recursiveGet = isRecursive ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly;
             // looks like this is cur
             return new List<string>(Directory.GetFiles(someStartDirectory, "*.*", recursiveGet));
         }

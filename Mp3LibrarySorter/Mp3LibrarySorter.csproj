@@ -48,9 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IFileSystem.cs" />
-    <Compile Include="IMp3FileReader.cs" />
-    <Compile Include="IMp3Representation.cs" />
-    <Compile Include="IMp3TagLibrary.cs" />
+    <Compile Include="Mp3Node.cs" />
     <Compile Include="Mp3FileReader.cs" />
     <Compile Include="Mp3LibrarySorter.cs" />
     <Compile Include="mp3Stuff\BitReader.cs" />

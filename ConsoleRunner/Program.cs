@@ -123,16 +123,20 @@ namespace HiveConsole
             var Hive = new Mp3LibrarySorter.Mp3LibrarySorter(fileSystem, startIn, destination,
                 tagLibrary, fileReader);
 
+
             Console.WriteLine(string.Format("{0} artists found", tagLibrary.Artists.Count));
-            Console.Write(divider);
+            Console.WriteLine(divider);
 
             foreach(string artist in tagLibrary.Artists)
             {
                 IList<string> albums = tagLibrary.GetAlbumsForArtist(artist);
 
+                Console.WriteLine(divider);
+
                 Console.WriteLine("Artist: " + artist + "\tAlbum count: " + albums.Count);
                 Console.Write(divider);
 
+                
                 foreach(string album in albums)
                 {
                     Console.WriteLine("Artist: " + artist + "\tAlbum: " + album);
@@ -146,9 +150,6 @@ namespace HiveConsole
             try
             {
                 Hive.CreateFoldersForArtists();
-    
-                //organizer.Index();
-                //organizer.Organize();
             }
             catch (Exception e)
             {

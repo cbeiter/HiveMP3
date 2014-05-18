@@ -30,7 +30,7 @@ namespace Mp3LibrarySorterTests
             _mockMp3Node.FileName = SomeFileName;
 
             _mockFileSystem = MockRepository.GenerateStub<IFileSystem>();
-            _mockFileSystem.Stub(system => system.GetMp3FilePaths(SomeStartDirectory)).Return(new List<string> { SomeFileName });
+            _mockFileSystem.Stub(system => system.GetMp3FilePaths(SomeStartDirectory, true)).Return(new List<string> { SomeFileName });
 
             _mockMp3TagLibrary = MockRepository.GenerateStub<IMp3TagLibrary>();
             _mockMp3TagLibrary.Stub(hierarchy => hierarchy.Artists).Return(new List<string> {SomeArtistName});
@@ -56,7 +56,7 @@ namespace Mp3LibrarySorterTests
         [Test]
         public void ShouldRetrieveAllMp3FilesFromStartingDirectory()
         {
-            _mockFileSystem.AssertWasCalled(system => system.GetMp3FilePaths(SomeStartDirectory));
+            _mockFileSystem.AssertWasCalled(system => system.GetMp3FilePaths(SomeStartDirectory, false));
         }
 
         [Test]

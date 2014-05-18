@@ -6,7 +6,7 @@ namespace Mp3LibrarySorter
     /// <summary>
     /// MP3 Info Library of strings describing avaible
     /// </summary>
-    public class Mp3TagLibrary : IMp3TagLibrary
+    public class Mp3TagLibrary
     {
         /// <summary>
         /// Core data structure that contains the library heirarchy of information 
@@ -29,7 +29,7 @@ namespace Mp3LibrarySorter
         /// Checks whether a song is in the heirarchy and adds if necessary
         /// </summary>
         /// <param name="Mp3Node"></param>
-        public void AddInformation(IMp3Node Mp3Node)
+        public void AddInformation(Mp3Node Mp3Node)
         {
             var artist = Mp3Node.ArtistName;
             var albumName = Mp3Node.AlbumName;

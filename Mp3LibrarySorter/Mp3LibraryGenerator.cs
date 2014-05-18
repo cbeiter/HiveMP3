@@ -8,14 +8,14 @@ namespace Mp3LibrarySorter
     /// and subsequently copies the files to a new folder structure based on the
     /// attributes tagged on the MP3 files
     /// </summary>
-    public class Mp3LibrarySorter
+    public class Mp3LibraryGenerator
     {
         private readonly IFileSystem _fileSystem;
         private readonly string _sourceFolder;
         private readonly string _destinationFolder;
-        private readonly IMp3TagLibrary _mp3TagsHierarchy;
-        private readonly IMp3FileReader _mp3FileReader;
-        private readonly IList<IMp3Node> _mp3FileList;
+        private readonly Mp3TagLibrary _mp3TagsHierarchy;
+        private readonly Mp3FileReader _mp3FileReader;
+        private readonly IList<Mp3Node> _mp3FileList;
 
         /// <summary>
         /// Constructor that initializes the MP3LibrarySorter with the list of files at the source
@@ -25,8 +25,8 @@ namespace Mp3LibrarySorter
         /// <param name="destinationFolder"></param>
         /// <param name="mp3TagsHierarchy"></param>
         /// <param name="mp3FileReader"></param>
-        public Mp3LibrarySorter(IFileSystem fileSystem, string sourceFolder, string destinationFolder, 
-            IMp3TagLibrary mp3TagsHierarchy, IMp3FileReader mp3FileReader)
+        public Mp3LibraryGenerator(IFileSystem fileSystem, string sourceFolder, string destinationFolder, 
+            Mp3TagLibrary mp3TagsHierarchy, Mp3FileReader mp3FileReader)
         {
             _fileSystem = fileSystem;
             _sourceFolder = sourceFolder;
@@ -46,7 +46,14 @@ namespace Mp3LibrarySorter
             }
         }
 
-        // format of:  c:/destinationFolder/artistName/albumName/*.mp3
+
+        /// <summary>
+        /// Reads in catalog of information about the mp3 files found at the source location
+        /// and uses it move the mp3s to the destination in the folder and 
+        /// file name structure as currently implemented here
+        /// 
+        /// format of:  c:/destinationFolder/artistName/albumName/*.mp3
+        /// </summary>
         public void CreateFoldersForArtists()
         {
             foreach (var artist in _mp3TagsHierarchy.Artists)

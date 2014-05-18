@@ -8,7 +8,7 @@ namespace Mp3LibrarySorter
     /// <summary>
     /// Reads tags from MP3 files from file folder
     /// </summary>
-    public class Mp3FileReader : IMp3FileReader
+    public class Mp3FileReader
     {
         /// <summary>
         /// List of files with missing tags.  Used by unit test only
@@ -23,9 +23,9 @@ namespace Mp3LibrarySorter
         /// </summary>
         /// <param name="mp3Files">List of string paths to the MP3 files</param>
         /// <returns>List of MP3 representations</returns>
-        public IList<IMp3Node> RetrieveTagsFromMp3Files(IList<string> mp3FilePaths)
+        public IList<Mp3Node> RetrieveTagsFromMp3Files(IList<string> mp3FilePaths)
         {
-            var mp3FileList = new List<IMp3Node>();
+            var mp3FileList = new List<Mp3Node>();
             var count = 0;
 
             foreach (var mp3File in mp3FilePaths)

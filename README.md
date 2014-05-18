@@ -12,3 +12,4 @@ Burn down list
 * Current implementation uses the filename as a unique identifier, and does not match files based on tags
 * Update MP3 reader to track duplicates
 * Read bitrate off files and choose which files should win when dupe based on bitrate
+* Special characters in folder names cause exceptions when writing
