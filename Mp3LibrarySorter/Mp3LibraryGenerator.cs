@@ -10,7 +10,7 @@ namespace Mp3LibrarySorter
     /// </summary>
     public class Mp3LibraryGenerator
     {
-        private readonly IFileSystem _fileSystem;
+        private readonly FileManager _fileManager;
         private readonly string _sourceFolder;
         private readonly string _destinationFolder;
         private readonly Mp3TagLibrary _mp3TagsHierarchy;
@@ -20,22 +20,22 @@ namespace Mp3LibrarySorter
         /// <summary>
         /// Constructor that initializes the MP3LibrarySorter with the list of files at the source
         /// </summary>
-        /// <param name="fileSystem"></param>
+        /// <param name="fileManager"></param>
         /// <param name="sourceFolder"></param>
         /// <param name="destinationFolder"></param>
         /// <param name="mp3TagsHierarchy"></param>
         /// <param name="mp3FileReader"></param>
-        public Mp3LibraryGenerator(IFileSystem fileSystem, string sourceFolder, string destinationFolder, 
+        public Mp3LibraryGenerator(FileManager fileManager, string sourceFolder, string destinationFolder, 
             Mp3TagLibrary mp3TagsHierarchy, Mp3FileReader mp3FileReader)
         {
-            _fileSystem = fileSystem;
+            _fileManager = fileManager;
             _sourceFolder = sourceFolder;
             _destinationFolder = destinationFolder;
             _mp3TagsHierarchy = mp3TagsHierarchy;
             _mp3FileReader = mp3FileReader;
 
             // get all the mp3s from the source folder
-            var files = _fileSystem.GetMp3FilePaths(_sourceFolder, true);
+            var files = _fileManager.GetMp3FilePaths(_sourceFolder, true);
 
             // generates a List of MP3Node files representing the songs in the folder
             _mp3FileList = _mp3FileReader.RetrieveTagsFromMp3Files(files);
@@ -59,21 +59,21 @@ namespace Mp3LibrarySorter
             foreach (var artist in _mp3TagsHierarchy.Artists)
             {
                 string artistFolderName = _destinationFolder + Path.DirectorySeparatorChar + artist;
-                _fileSystem.CreateDirectory(artistFolderName);
+                _fileManager.CreateDirectory(artistFolderName);
 
                 foreach (var album in _mp3TagsHierarchy.GetAlbumsForArtist(artist))
                 {
                     var albumFolderName = artistFolderName + Path.DirectorySeparatorChar + album;
                     
                     // TODO: let's think about having a richer album folder name
-                    _fileSystem.CreateDirectory(albumFolderName);
+                    _fileManager.CreateDirectory(albumFolderName);
 
                     var filesNames = _mp3TagsHierarchy.GetSongsForAlbumOfArtist(album, artist);
 
                     foreach (var fileName in filesNames)
                     {
                         var fileNameWithoutFullPath = Path.GetFileName(fileName);
-                        _fileSystem.Move(fileName, albumFolderName + Path.DirectorySeparatorChar + fileNameWithoutFullPath);
+                        _fileManager.Move(fileName, albumFolderName + Path.DirectorySeparatorChar + fileNameWithoutFullPath);
                     }
                 }
             }

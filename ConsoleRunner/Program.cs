@@ -18,7 +18,7 @@ namespace HiveConsole
             Console.WriteLine("Welcome to the Hive MP3 Library Sorter!");
        //     TagLib.File file = TagLib.File.Create(@"c:\testmp3\01 Egg Raid On Mojo.mp3");
             // Console.WriteLine(file.Tag);
-            //var a = new Mp3LibrarySorter.Mp3LibrarySorter(new FileSystem(), @"c:\testmp3", new Mp3TagsHierarchy(), new Mp3FileReader());
+            //var a = new Mp3LibrarySorter.Mp3LibrarySorter(new fileManager(), @"c:\testmp3", new Mp3TagsHierarchy(), new Mp3FileReader());
             //a.CreateFoldersForArtists();
 
             /* END OF ORIGINAL FILE */
@@ -118,9 +118,9 @@ namespace HiveConsole
             // Inspect the files and build the Hive metadata library
             Mp3TagLibrary tagLibrary = new Mp3TagLibrary();
             Mp3FileReader fileReader = new Mp3FileReader();
-            FileSystem fileSystem = new FileSystem();
+            FileManager fileManager = new FileManager();
 
-            var Hive = new Mp3LibrarySorter.Mp3LibraryGenerator(fileSystem, startIn, destination,
+            var Hive = new Mp3LibrarySorter.Mp3LibraryGenerator(fileManager, startIn, destination,
                 tagLibrary, fileReader);
 
 

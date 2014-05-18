@@ -47,7 +47,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IFileSystem.cs" />
+    <Compile Include="FileManager.cs" />
     <Compile Include="Mp3Node.cs" />
     <Compile Include="Mp3FileReader.cs" />
     <Compile Include="Mp3LibraryGenerator.cs" />

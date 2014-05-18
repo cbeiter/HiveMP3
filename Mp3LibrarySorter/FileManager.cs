@@ -5,23 +5,11 @@ using System.IO;
 namespace Mp3LibrarySorter
 {
     /// <summary>
-    /// Interfacd for File System object
-    /// 
-    /// Not sure why we have this interface
-    /// </summary>
-    public interface IFileSystem
-    {
-        void CreateDirectory(string artistName);
-        List<string> GetMp3FilePaths(string someStartDirectory, bool isRecursive);
-        void Move(string source, string destination);
-    }
-
-    /// <summary>
-    /// File System object that wraps System.IO.  Not sure what the purpose of this 
+    /// FileManager object that wraps System.IO.  Not sure what the purpose of this 
     /// since there really is not much here like error handling. Doesn't make sense
     /// unless the original author had other intentions?
     /// </summary>
-    public class FileSystem : IFileSystem
+    public class FileManager
     {
         /// <summary>
         /// Creates a directory with the name provided
