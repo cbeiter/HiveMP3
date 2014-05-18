@@ -4,9 +4,11 @@ using System.Linq;
 namespace Mp3LibrarySorter
 {
     /// <summary>
-    /// MP3 Info Library of strings describing avaible
+    /// Creates a mapping of the source files to their new names in the destination
+    /// The mapper is then used by the library generator to move the files with the 
+    /// new appropriate names.
     /// </summary>
-    public class Mp3TagLibrary
+    public class Mp3FileMapper
     {
         /// <summary>
         /// Core data structure that contains the library heirarchy of information 
@@ -19,7 +21,7 @@ namespace Mp3LibrarySorter
         /// <summary>
         /// Constructor for library
         /// </summary>
-        public Mp3TagLibrary()
+        public Mp3FileMapper()
         {
             // Dictionary Artist string ->  Dictionary Album string -> List fileName string
             _artistAlbumSongs = new Dictionary<string, Dictionary<string, List<string>>>();

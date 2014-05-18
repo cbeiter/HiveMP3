@@ -116,7 +116,7 @@ namespace HiveConsole
             stopwatch.Start();
 
             // Inspect the files and build the Hive metadata library
-            Mp3TagLibrary tagLibrary = new Mp3TagLibrary();
+            Mp3FileMapper tagLibrary = new Mp3FileMapper();
             Mp3FileReader fileReader = new Mp3FileReader();
             FileManager fileManager = new FileManager();
 

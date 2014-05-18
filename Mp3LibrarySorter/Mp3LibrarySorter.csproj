@@ -57,7 +57,7 @@
     <Compile Include="mp3Stuff\id3v2Frame.cs" />
     <Compile Include="mp3Stuff\mp3info.cs" />
     <Compile Include="mp3Stuff\MPEG.cs" />
-    <Compile Include="Mp3TagLibrary.cs" />
+    <Compile Include="Mp3FileMapper.cs" />
     <Compile Include="MusicID3Tag.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

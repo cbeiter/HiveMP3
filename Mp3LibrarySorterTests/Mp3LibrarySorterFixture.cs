@@ -14,7 +14,7 @@ namespace Mp3LibrarySorterTests
         const string SomeStartDirectory = "someDirectory";
         List<Mp3Node> _Mp3Nodes = new List<Mp3Node>();
         private Mp3Node _mockMp3Node;
-        private Mp3TagLibrary _mockMp3TagLibrary;
+        private Mp3FileMapper _mockMp3TagLibrary;
         private Mp3FileReader _mockMp3FileReader;
         private readonly string _albumFolder = SomeStartDirectory + Path.DirectorySeparatorChar + SomeArtistName + Path.DirectorySeparatorChar + SomeAlbumName;
         const string SomeFileName = "SomeFileName";
@@ -32,7 +32,7 @@ namespace Mp3LibrarySorterTests
             _mockFileManager = MockRepository.GenerateStub<FileManager>();
             _mockFileManager.Stub(system => system.GetMp3FilePaths(SomeStartDirectory, true)).Return(new List<string> { SomeFileName });
 
-            _mockMp3TagLibrary = MockRepository.GenerateStub<Mp3TagLibrary>();
+            _mockMp3TagLibrary = MockRepository.GenerateStub<Mp3FileMapper>();
             _mockMp3TagLibrary.Stub(hierarchy => hierarchy.Artists).Return(new List<string> {SomeArtistName});
             _mockMp3TagLibrary.Stub(tagsHierarchy => tagsHierarchy.GetAlbumsForArtist(SomeArtistName)).Return(
                 new List<string> {SomeAlbumName});

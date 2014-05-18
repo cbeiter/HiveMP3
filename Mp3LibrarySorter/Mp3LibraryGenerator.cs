@@ -13,7 +13,7 @@ namespace Mp3LibrarySorter
         private readonly FileManager _fileManager;
         private readonly string _sourceFolder;
         private readonly string _destinationFolder;
-        private readonly Mp3TagLibrary _mp3TagsHierarchy;
+        private readonly Mp3FileMapper _mp3TagsHierarchy;
         private readonly Mp3FileReader _mp3FileReader;
         private readonly IList<Mp3Node> _mp3FileList;
 
@@ -26,7 +26,7 @@ namespace Mp3LibrarySorter
         /// <param name="mp3TagsHierarchy"></param>
         /// <param name="mp3FileReader"></param>
         public Mp3LibraryGenerator(FileManager fileManager, string sourceFolder, string destinationFolder, 
-            Mp3TagLibrary mp3TagsHierarchy, Mp3FileReader mp3FileReader)
+            Mp3FileMapper mp3TagsHierarchy, Mp3FileReader mp3FileReader)
         {
             _fileManager = fileManager;
             _sourceFolder = sourceFolder;
