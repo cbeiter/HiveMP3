@@ -8,7 +8,7 @@ namespace Mp3LibrarySorterTests
     [TestFixture]
     public class Mp3FileReaderFixture 
     {
-        private IList<IMp3Node> _tags;
+        private IList<Mp3Node> _tags;
         private IList<string> _filesWithMissingTags;
 
         [SetUp]

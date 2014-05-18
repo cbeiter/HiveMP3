@@ -120,7 +120,7 @@ namespace HiveConsole
             Mp3FileReader fileReader = new Mp3FileReader();
             FileSystem fileSystem = new FileSystem();
 
-            var Hive = new Mp3LibrarySorter.Mp3LibrarySorter(fileSystem, startIn, destination,
+            var Hive = new Mp3LibrarySorter.Mp3LibraryGenerator(fileSystem, startIn, destination,
                 tagLibrary, fileReader);
 
 
