@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using System.Text;
 
-namespace Mp3LibrarySorter.mp3Stuff
+namespace HiveOrganizer.mp3Stuff
 {
 	/// <summary>
 	/// Reads/writes Id3v1 tags.  lots of help from Paul Lockwood's code

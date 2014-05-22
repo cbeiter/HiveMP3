@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using Mp3LibrarySorter;
+using HiveOrganizer;
 using NUnit.Framework;
 
-namespace Mp3LibrarySorterTests 
+namespace HiveOrganizerTests 
 {
     [TestFixture]
     public class Mp3FileReaderFixture 
@@ -15,7 +15,7 @@ namespace Mp3LibrarySorterTests
         public void Setup()
         {
             var reader = new Mp3FileReader();
-            var files = Directory.GetFiles(@"C:\Development\Mp3LibrarySorter\Data", "*.*", SearchOption.AllDirectories);
+            var files = Directory.GetFiles(@"C:\Development\HiveOrganizer\Data", "*.*", SearchOption.AllDirectories);
             _tags = reader.RetrieveTagsFromMp3Files(files);
             _filesWithMissingTags = reader.FilesWithMissingTags;
         }

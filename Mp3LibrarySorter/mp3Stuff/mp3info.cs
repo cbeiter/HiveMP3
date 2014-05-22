@@ -1,6 +1,6 @@
 using System;
 using System.IO;
-using Mp3LibrarySorter.mp3Stuff;
+using HiveOrganizer.mp3Stuff;
 
 
 namespace mp3info

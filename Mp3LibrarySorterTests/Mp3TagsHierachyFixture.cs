@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using Mp3LibrarySorter;
+using HiveOrganizer;
 using NUnit.Framework;
 
-namespace Mp3LibrarySorterTests
+namespace HiveOrganizerTests
 {
     [TestFixture]
     public class Mp3TagsHierachyFixture

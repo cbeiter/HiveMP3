@@ -1,4 +1,4 @@
-﻿namespace Mp3LibrarySorter
+﻿namespace HiveOrganizer
 {
     internal class MusicID3Tag
     {

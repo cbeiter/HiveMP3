@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using Raize.CodeSiteLogging;
 
-namespace Mp3LibrarySorter
+namespace HiveOrganizer
 {
     /// <summary>
     /// Reads tags from MP3 files from file folder

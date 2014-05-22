@@ -1,15 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using Mp3LibrarySorter;
+using HiveOrganizer;
 using NUnit.Framework;
 using Rhino.Mocks;
 
-namespace Mp3LibrarySorterTests
+namespace HiveOrganizerTests
 {
     [TestFixture]
-    public class Mp3LibrarySorterTests
+    public class HiveOrganizerTests
     {
-        private Mp3LibrarySorter.Mp3LibraryGenerator _mp3LibrarySorter;
+        private HiveOrganizer.Mp3LibraryGenerator _HiveOrganizer;
         private FileManager _mockFileManager;
         const string SomeStartDirectory = "someDirectory";
         List<Mp3Node> _Mp3Nodes = new List<Mp3Node>();
@@ -48,9 +48,9 @@ namespace Mp3LibrarySorterTests
                             {AlbumName = SomeAlbumName, ArtistName = SomeArtistName, FileName = SomeFileName}
                     });
 
-            _mp3LibrarySorter = new Mp3LibrarySorter.Mp3LibraryGenerator(_mockFileManager, SomeStartDirectory,
+            _HiveOrganizer = new HiveOrganizer.Mp3LibraryGenerator(_mockFileManager, SomeStartDirectory,
                 SomeStartDirectory, _mockMp3TagLibrary, _mockMp3FileReader);
-            _mp3LibrarySorter.CreateFoldersForArtists();
+            _HiveOrganizer.CreateFoldersForArtists();
         }
 
         [Test]

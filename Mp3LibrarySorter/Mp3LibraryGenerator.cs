@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 
-namespace Mp3LibrarySorter
+namespace HiveOrganizer
 {
     /// <summary>
     /// Creates a library of info about MP3 files found in the provided folder
@@ -18,7 +18,7 @@ namespace Mp3LibrarySorter
         private readonly IList<Mp3Node> _mp3FileList;
 
         /// <summary>
-        /// Constructor that initializes the MP3LibrarySorter with the list of files at the source
+        /// Constructor that initializes the HiveOrganizer with the list of files at the source
         /// </summary>
         /// <param name="fileManager"></param>
         /// <param name="sourceFolder"></param>

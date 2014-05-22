@@ -4,7 +4,7 @@ using System.Text;
 using System.IO;
 using mp3info;
 
-namespace Mp3LibrarySorter.mp3Stuff
+namespace HiveOrganizer.mp3Stuff
 {
 	/// <summary>
 	/// Summary description for ID3v2.

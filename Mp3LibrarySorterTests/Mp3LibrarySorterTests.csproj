@@ -52,9 +52,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Mp3LibrarySorter\Mp3LibrarySorter.csproj">
+    <ProjectReference Include="..\Mp3LibrarySorter\HiveOrganizer.csproj">
       <Project>{5001D67A-9E16-4107-9334-0FBFF17CC038}</Project>
-      <Name>Mp3LibrarySorter</Name>
+      <Name>HiveOrganizer</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace Mp3LibrarySorter
+namespace HiveOrganizer
 {
     /// <summary>
     /// Creates a mapping of the source files to their new names in the destination

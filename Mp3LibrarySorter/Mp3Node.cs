@@ -1,4 +1,4 @@
-﻿namespace Mp3LibrarySorter
+﻿namespace HiveOrganizer
 {
     /// <summary>
     /// Propriatary structure containing data needed to write files out 

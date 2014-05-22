@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 
-namespace Mp3LibrarySorter
+namespace HiveOrganizer
 {
     /// <summary>
     /// FileManager object that wraps System.IO.  Not sure what the purpose of this 
