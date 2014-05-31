@@ -7,13 +7,13 @@ namespace HiveOrganizerTests
     [TestFixture]
     public class Mp3TagsHierachyFixture
     {
-        private Mp3FileMapper _mp3ClassHierarchy;
+        private artistAlbumCatalog _mp3ClassHierarchy;
         private List<string> _expectedAlbumsForArtist;
 
         [SetUp]
         public void Setup()
         {
-            _mp3ClassHierarchy = new Mp3FileMapper();
+            _mp3ClassHierarchy = new artistAlbumCatalog();
             _mp3ClassHierarchy.AddInformation(new Mp3Node { AlbumName = "Album1", ArtistName = "Artist", FileName = "fileName1" });
             _mp3ClassHierarchy.AddInformation(new Mp3Node { AlbumName = "Album2", ArtistName = "Artist", FileName = "fileName2" });
             _expectedAlbumsForArtist = new List<string> {"Album1", "Album2"};

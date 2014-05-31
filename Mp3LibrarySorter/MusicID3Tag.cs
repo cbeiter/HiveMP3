@@ -1,5 +1,8 @@
 ﻿namespace HiveOrganizer
 {
+    /// <summary>
+    /// This class appears to be unused and have no idea what if anything it was supposed to do.
+    /// </summary>
     internal class MusicID3Tag
     {
         public byte[] TAGID = new byte[3];      //  3

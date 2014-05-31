@@ -13,36 +13,33 @@ namespace HiveOrganizer
         private readonly FileManager _fileManager;
         private readonly string _sourceFolder;
         private readonly string _destinationFolder;
-        private readonly Mp3FileMapper _mp3TagsHierarchy;
+        private readonly artistAlbumCatalog _newFileStructure;
         private readonly Mp3FileReader _mp3FileReader;
         private readonly IList<Mp3Node> _mp3FileList;
 
         /// <summary>
         /// Constructor that initializes the HiveOrganizer with the list of files at the source
         /// </summary>
-        /// <param name="fileManager"></param>
         /// <param name="sourceFolder"></param>
         /// <param name="destinationFolder"></param>
         /// <param name="mp3TagsHierarchy"></param>
-        /// <param name="mp3FileReader"></param>
-        public Mp3LibraryGenerator(FileManager fileManager, string sourceFolder, string destinationFolder, 
-            Mp3FileMapper mp3TagsHierarchy, Mp3FileReader mp3FileReader)
+        public Mp3LibraryGenerator(string sourceFolder, string destinationFolder, artistAlbumCatalog newFileStructure)
         {
-            _fileManager = fileManager;
+            _fileManager = new FileManager();
             _sourceFolder = sourceFolder;
             _destinationFolder = destinationFolder;
-            _mp3TagsHierarchy = mp3TagsHierarchy;
-            _mp3FileReader = mp3FileReader;
+            _newFileStructure = newFileStructure;
+            _mp3FileReader = new Mp3FileReader();
 
-            // get all the mp3s from the source folder
-            var files = _fileManager.GetMp3FilePaths(_sourceFolder, true);
+            // get all paths to mp3s from the source folder
+            var filePaths = _fileManager.GetMp3FilePaths(_sourceFolder, true);
 
-            // generates a List of MP3Node files representing the songs in the folder
-            _mp3FileList = _mp3FileReader.RetrieveTagsFromMp3Files(files);
+            // generates a flat list of MP3Node files representing the songs in the folder
+            _mp3FileList = _mp3FileReader.RetrieveTagsFromMp3Files(filePaths);
             
             foreach (var Mp3Node in _mp3FileList)
             {
-                _mp3TagsHierarchy.AddInformation(Mp3Node);
+                _newFileStructure.AddInformation(Mp3Node);
             }
         }
 
@@ -56,24 +53,23 @@ namespace HiveOrganizer
         /// </summary>
         public void CreateFoldersForArtists()
         {
-            foreach (var artist in _mp3TagsHierarchy.Artists)
+            foreach (var artist in _newFileStructure.Artists)
             {
                 string artistFolderName = _destinationFolder + Path.DirectorySeparatorChar + artist;
                 _fileManager.CreateDirectory(artistFolderName);
 
-                foreach (var album in _mp3TagsHierarchy.GetAlbumsForArtist(artist))
+                foreach (var album in _newFileStructure.GetAlbumsForArtist(artist))
                 {
                     var albumFolderName = artistFolderName + Path.DirectorySeparatorChar + album;
                     
                     // TODO: let's think about having a richer album folder name
                     _fileManager.CreateDirectory(albumFolderName);
 
-                    var filesNames = _mp3TagsHierarchy.GetSongsForAlbumOfArtist(album, artist);
+                    var mp3Nodes = _newFileStructure.GetSongsForAlbumOfArtist(album, artist);
 
-                    foreach (var fileName in filesNames)
+                    foreach (var node in mp3Nodes)
                     {
-                        var fileNameWithoutFullPath = Path.GetFileName(fileName);
-                        _fileManager.Move(fileName, albumFolderName + Path.DirectorySeparatorChar + fileNameWithoutFullPath);
+                        _fileManager.Move(node.FileName, albumFolderName + Path.DirectorySeparatorChar + node.NewFileName);
                     }
                 }
             }

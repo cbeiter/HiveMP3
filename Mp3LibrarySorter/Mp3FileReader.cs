@@ -21,17 +21,18 @@ namespace HiveOrganizer
         /// 
         /// Not sure whether I understand why we are moving this into a separate structure
         /// </summary>
-        /// <param name="mp3Files">List of string paths to the MP3 files</param>
+        /// <param name="mp3FilePaths">List of string paths to the MP3 files</param>
         /// <returns>List of MP3 representations</returns>
         public IList<Mp3Node> RetrieveTagsFromMp3Files(IList<string> mp3FilePaths)
         {
             var mp3FileList = new List<Mp3Node>();
             var count = 0;
 
-            foreach (var mp3File in mp3FilePaths)
+            foreach (var currentMp3FilePath in mp3FilePaths)
             {
                 // filtering out these two types.  Don't know why
-                string extension = Path.GetExtension(mp3File);
+                string extension = Path.GetExtension(currentMp3FilePath);
+
                 if ((extension != ".cue") && (extension != ".db"))
                 try
                 {
@@ -43,23 +44,25 @@ namespace HiveOrganizer
                     try
                     {
                         // hydrate TagLib File data structure from raw mp3 file
-                        tagLibFile = TagLib.File.Create(mp3File);
+                        tagLibFile = TagLib.File.Create(currentMp3FilePath);
                     }
                     catch (Exception exception)
                     {
-                        _filesWithMissingTags.Add(mp3File);
-                        CodeSite.Send(mp3File);
+                        _filesWithMissingTags.Add(currentMp3FilePath);
+                        CodeSite.Send(currentMp3FilePath);
                         CodeSite.SendException(exception);
-                        continue;
                     }
-                    
-                    // if if we have a tag library, we'll go through it and create an MP3Node to represent it
+
+                    string artist = "Unknown artist";
+                    string album = "Unknown album";
+                    string title = "Unknown title";
+                    string trackNumber = "00";
+                    int bitrate = 1;
+
+                    // if we have a tag library, we'll go through it and create an MP3Node to represent it
                     // TODO: Not sure the justification of moving from this tagLib format to our own custom format
                     if (tagLibFile != null && tagLibFile.Tag != null)
                     {
-                        string artist;
-                        string album;
-
                         // set artist
                         if (tagLibFile.Tag.AlbumArtists.Length > 0)
                         {
@@ -72,8 +75,7 @@ namespace HiveOrganizer
                         }
                         else
                         {
-                            artist = "unknown artist";
-                            _filesWithMissingTags.Add(mp3File);
+                            _filesWithMissingTags.Add(currentMp3FilePath);
                         }
 
                         // set album
@@ -87,40 +89,52 @@ namespace HiveOrganizer
                         }
                         else
                         {
-                            album = "unknown album";
-                            _filesWithMissingTags.Add(mp3File);
+                            _filesWithMissingTags.Add(currentMp3FilePath);
+                        }
+                        
+                        // set trackName
+                        if (tagLibFile.Tag.Title.Length > 0)
+                        {
+                            title = tagLibFile.Tag.Title;
+                        }
+                        else
+                        {
+                            title = currentMp3FilePath;
                         }
 
-                        // create new MP3 Node in the list
-                        var Mp3Node1 = new Mp3Node()
-                        {
-                            AlbumName = album,
-                            ArtistName = artist,
-                            FileName = mp3File
-                        };
-                        mp3FileList.Add(Mp3Node1);
+                        // set track number
+                        trackNumber = tagLibFile.Tag.Track.ToString();
                         
+                        if (string.IsNullOrEmpty(trackNumber))
+                        {
+                            trackNumber = "00";
+                        }
+
+                        bitrate = tagLibFile.Properties.AudioBitrate;
                     }
                     else 
                     {
-                        // create new MP3 Node in the list
-                        var Mp3Node1 = new Mp3Node()
-                        {
-                            AlbumName = "Untagged MP3 File",
-                            ArtistName = "Untagged MP3 File",
-                            FileName = mp3File
-                        };
-
-                        mp3FileList.Add(Mp3Node1);
-
-                        _filesWithMissingTags.Add(mp3File);
+                        _filesWithMissingTags.Add(currentMp3FilePath);
                     }
+
+                    // create new MP3 Node in the list
+                    var Mp3Node1 = new Mp3Node()
+                    {
+                        AlbumName = album,
+                        ArtistName = artist,
+                        FileName = currentMp3FilePath,
+                        Title = title,
+                        Bitrate = bitrate,
+                        TrackNumber = trackNumber
+                    };
+
+                    mp3FileList.Add(Mp3Node1);
                 } 
                 catch (Exception ex) 
                 {
-                    CodeSite.Send(mp3File);
+                    CodeSite.Send(currentMp3FilePath);
                     CodeSite.SendException(ex);
-                    _filesWithMissingTags.Add(mp3File);
+                    _filesWithMissingTags.Add(currentMp3FilePath);
                 }
             }
 

@@ -116,13 +116,9 @@ namespace HiveConsole
             stopwatch.Start();
 
             // Inspect the files and build the Hive metadata library
-            Mp3FileMapper tagLibrary = new Mp3FileMapper();
-            Mp3FileReader fileReader = new Mp3FileReader();
-            FileManager fileManager = new FileManager();
+            artistAlbumCatalog tagLibrary = new artistAlbumCatalog();
 
-            var Hive = new HiveOrganizer.Mp3LibraryGenerator(fileManager, startIn, destination,
-                tagLibrary, fileReader);
-
+            var Hive = new HiveOrganizer.Mp3LibraryGenerator(startIn, destination, tagLibrary);
 
             Console.WriteLine(string.Format("{0} artists found", tagLibrary.Artists.Count));
             Console.WriteLine(divider);

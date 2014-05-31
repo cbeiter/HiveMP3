@@ -14,7 +14,7 @@ namespace HiveOrganizerTests
         const string SomeStartDirectory = "someDirectory";
         List<Mp3Node> _Mp3Nodes = new List<Mp3Node>();
         private Mp3Node _mockMp3Node;
-        private Mp3FileMapper _mockMp3TagLibrary;
+        private artistAlbumCatalog _mockMp3TagLibrary;
         private Mp3FileReader _mockMp3FileReader;
         private readonly string _albumFolder = SomeStartDirectory + Path.DirectorySeparatorChar + SomeArtistName + Path.DirectorySeparatorChar + SomeAlbumName;
         const string SomeFileName = "SomeFileName";
@@ -32,14 +32,14 @@ namespace HiveOrganizerTests
             _mockFileManager = MockRepository.GenerateStub<FileManager>();
             _mockFileManager.Stub(system => system.GetMp3FilePaths(SomeStartDirectory, true)).Return(new List<string> { SomeFileName });
 
-            _mockMp3TagLibrary = MockRepository.GenerateStub<Mp3FileMapper>();
+            _mockMp3TagLibrary = MockRepository.GenerateStub<artistAlbumCatalog>();
             _mockMp3TagLibrary.Stub(hierarchy => hierarchy.Artists).Return(new List<string> {SomeArtistName});
             _mockMp3TagLibrary.Stub(tagsHierarchy => tagsHierarchy.GetAlbumsForArtist(SomeArtistName)).Return(
                 new List<string> {SomeAlbumName});
 
             _mockMp3TagLibrary.Stub(
                 mp3TagsHierarchy => mp3TagsHierarchy.GetSongsForAlbumOfArtist(SomeAlbumName, SomeArtistName)).Return(
-                    new List<string> {SomeFileName});
+                    new List<Mp3Node> {});
             _mockMp3FileReader = MockRepository.GenerateStub<Mp3FileReader>();
             _mockMp3FileReader.Stub(reader => reader.RetrieveTagsFromMp3Files(new List<string> {SomeFileName})).Return(
                 new List<Mp3Node>
@@ -48,8 +48,7 @@ namespace HiveOrganizerTests
                             {AlbumName = SomeAlbumName, ArtistName = SomeArtistName, FileName = SomeFileName}
                     });
 
-            _HiveOrganizer = new HiveOrganizer.Mp3LibraryGenerator(_mockFileManager, SomeStartDirectory,
-                SomeStartDirectory, _mockMp3TagLibrary, _mockMp3FileReader);
+            _HiveOrganizer = new HiveOrganizer.Mp3LibraryGenerator(SomeStartDirectory, SomeStartDirectory, _mockMp3TagLibrary);
             _HiveOrganizer.CreateFoldersForArtists();
         }
 
