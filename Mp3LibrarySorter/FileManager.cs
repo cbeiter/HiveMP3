@@ -45,7 +45,16 @@ namespace HiveOrganizer
         public void Move(string source, string destination)
         {
             Raize.CodeSiteLogging.CodeSite.Send("Moving " + source + " to " + destination);
-            File.Move(source, destination);
+            try
+            {
+                File.Move(source, destination);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                Console.WriteLine(e.StackTrace);
+            }
+            
         }
     }
 

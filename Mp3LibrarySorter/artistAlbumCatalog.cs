@@ -39,48 +39,43 @@ namespace HiveOrganizer
             var nodeList = new List<Mp3Node>();
 
             // TODO: add bitrate to the file name ? 
-            // Title: artist - album - 01 - tracktitle.mp3
-            newNode.NewFileName = newNode.ArtistName + separator + newNode.AlbumName + separator +
-                newNode.TrackNumber + separator + newNode.Title + ".mp3";
+            // Title: trackNum - artist - album - tracktitle.mp3
+            newNode.NewFileName = newNode.TrackNumber + separator + newNode.ArtistName + separator + newNode.AlbumName + separator + newNode.Title + ".mp3";
 
             if (!_artistAlbumMp3Nodes.ContainsKey(newNode.ArtistName))
             {
                 // artist not in catalog
                 _artistAlbumMp3Nodes[newNode.ArtistName] = new Dictionary<string, List<Mp3Node>>();
-                nodeList = _artistAlbumMp3Nodes[newNode.ArtistName][newNode.AlbumName];
+                _artistAlbumMp3Nodes[newNode.ArtistName][newNode.AlbumName] = new List<Mp3Node>();
             }
             else if (!_artistAlbumMp3Nodes[newNode.ArtistName].ContainsKey(newNode.AlbumName))
             {
                 // artist in catalog, but album is not
                 _artistAlbumMp3Nodes[newNode.ArtistName][newNode.AlbumName] = new List<Mp3Node>();
-                nodeList = _artistAlbumMp3Nodes[newNode.ArtistName][newNode.AlbumName];
             }
-            else
+            
+            nodeList = _artistAlbumMp3Nodes[newNode.ArtistName][newNode.AlbumName];
+
+            // go through the nodeList stored for the album
+            foreach (Mp3Node existingNode in nodeList)
             {
-                // found both artist and album in catalog, so look at the list of nodes in it
-                nodeList = _artistAlbumMp3Nodes[newNode.ArtistName][newNode.AlbumName];
-
-                // go through the nodeList stored for the album
-                foreach (Mp3Node existingNode in nodeList)
+                // if we find a matching node based on the new filename
+                // pick the one with the best bitrate
+                if (existingNode.NewFileName == newNode.NewFileName)
                 {
-                    // if we find a matching node based on the new filename
-                    // pick the one with the best bitrate
-                    if (existingNode.NewFileName == newNode.NewFileName)
+                    if (newNode.Bitrate <= existingNode.Bitrate)
                     {
-                        if (newNode.Bitrate <= existingNode.Bitrate)
-                        {
-                            addCurrentMp3 = false;
-                        }
-                        else
-                        {
-                            nodeList.Remove(existingNode);
-                        }
-
-                        break;
+                        addCurrentMp3 = false;
                     }
+                    else
+                    {
+                        nodeList.Remove(existingNode);
+                    }
+
+                    break;
                 }
             }
-
+            
             if (addCurrentMp3)
             {
                 nodeList.Add(newNode);                    

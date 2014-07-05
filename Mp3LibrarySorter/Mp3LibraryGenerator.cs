@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Text;
 
 namespace HiveOrganizer
 {
@@ -51,26 +53,39 @@ namespace HiveOrganizer
         /// 
         /// format of:  c:/destinationFolder/artistName/albumName/*.mp3
         /// </summary>
-        public void CreateFoldersForArtists()
+        public void CreateFoldersForArtists(ConsoleWriter consoleWriter)
         {
             foreach (var artist in _newFileStructure.Artists)
             {
+                
                 string artistFolderName = _destinationFolder + Path.DirectorySeparatorChar + artist;
+                consoleWriter.WriteLine(String.Format("Creating folder for artist: {0}", artistFolderName));
+               
                 _fileManager.CreateDirectory(artistFolderName);
 
                 foreach (var album in _newFileStructure.GetAlbumsForArtist(artist))
                 {
                     var albumFolderName = artistFolderName + Path.DirectorySeparatorChar + album;
+
+                    consoleWriter.WriteLine(String.Format("Creating folder for album: {0}", albumFolderName));
                     
                     // TODO: let's think about having a richer album folder name
                     _fileManager.CreateDirectory(albumFolderName);
 
                     var mp3Nodes = _newFileStructure.GetSongsForAlbumOfArtist(album, artist);
+                    int count = 1;
 
                     foreach (var node in mp3Nodes)
                     {
+                        consoleWriter.WriteLine("Count of files moved to album folder... ");
+                        consoleWriter.Write(count.ToString());
+
                         _fileManager.Move(node.FileName, albumFolderName + Path.DirectorySeparatorChar + node.NewFileName);
+                        
+                        count++;
                     }
+
+                    consoleWriter.Write("\n");
                 }
             }
         }

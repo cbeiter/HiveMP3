@@ -49,7 +49,8 @@ namespace HiveOrganizerTests
                     });
 
             _HiveOrganizer = new HiveOrganizer.Mp3LibraryGenerator(SomeStartDirectory, SomeStartDirectory, _mockMp3TagLibrary);
-            _HiveOrganizer.CreateFoldersForArtists();
+            ConsoleWriter writer = new ConsoleWriter();
+            _HiveOrganizer.CreateFoldersForArtists(writer);
         }
 
         [Test]
